@@ -215,26 +215,27 @@
       width: 100%;
       max-width: 325px;
       margin-bottom: 0;
+      min-width: 0;
+      box-sizing: border-box;
     }
-    .footer-btn.primary {
+    .footer-btn.playwin {
       background: #ffcc00;
       color: #1a1a1a;
     }
-    .footer-btn.primary:hover {
+    .footer-btn.playwin:hover {
       background: #ffe066;
       color: #1a1a1a;
-    }
-    .footer-btn:hover {
-      background: #3b5998;
-      transform: translateY(-2px) scale(1.04);
-      box-shadow: 0 8px 24px rgba(36,102,193,0.15);
-      color: #fff;
     }
     .footer-btn img {
       width: 26px;
       height: 26px;
       display: inline-block;
       vertical-align: middle;
+      background: none !important;
+      box-shadow: none !important;
+      border-radius: 6px;
+      opacity: 1 !important;
+      filter: none !important;
     }
     .footer-text {
       color: #ffe066;
@@ -247,6 +248,61 @@
       padding: 0 6px;
       word-break: break-word;
       min-height: 1.5em;
+    }
+    /* Game Rules text override */
+    .footer-btn-col .footer-text.gamerules-desc {
+      color: #ffe066; /* Same as contact and playwin text */
+      font-size: 1em;
+      font-weight: 500;
+    }
+    /* Modal Styles */
+    #gameRulesModal {
+      display: none;
+      position: fixed;
+      z-index: 9999;
+      left: 0;
+      top: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0,0,0,0.7);
+      align-items: center;
+      justify-content: center;
+    }
+    #gameRulesModal .modal-inner {
+      position: relative;
+      max-width: 90vw;
+      max-height: 90vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+    }
+    #gameRulesModal img {
+      display: block;
+      max-width: 95vw;
+      max-height: 80vh;
+      border-radius: 14px;
+      box-shadow: 0 4px 20px #000;
+    }
+    #closeRulesBtn {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      font-size: 2em;
+      background: rgba(0,0,0,0.8);
+      color: #ffe066;
+      border: none;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      cursor: pointer;
+      line-height: 1;
+      z-index: 2;
+      transition: background 0.2s;
+    }
+    #closeRulesBtn:hover {
+      background: rgba(255,204,0,0.95);
+      color: #222;
     }
     @media (max-width: 900px) {
       .games-grid {
@@ -264,6 +320,8 @@
       .footer-btn-col { min-width: 0; max-width: 98vw; width: 100%; }
       .footer-btn { font-size: 1em; min-width: 0; max-width: 98vw; }
       .footer-text { font-size: 0.98em; }
+      #gameRulesModal img { max-width: 98vw; max-height: 70vh; }
+      #closeRulesBtn { top: 4vw; left: 4vw; }
     }
     @keyframes fadeIn {
       0% { opacity: 0; transform: scale(0.98);}
@@ -322,7 +380,7 @@
     <div class="footer-bar">
       <div class="footer-buttons-row">
         <div class="footer-btn-col">
-          <a class="footer-btn primary" href="https://www.facebook.com/house.jackpot999" target="_blank" title="Play & Win - Message us!">
+          <a class="footer-btn playwin" href="https://www.facebook.com/house.jackpot999" target="_blank" title="Play & Win - Message us!">
             <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg" alt="Facebook" />
             Play & Win
           </a>
@@ -335,7 +393,21 @@
           </a>
           <div class="footer-text">For support or questions, click the button above.</div>
         </div>
+        <div class="footer-btn-col">
+          <button class="footer-btn" id="showRulesBtn" type="button">
+            <img src="https://i.imgur.com/8TjkQzg.png" alt="Game Rules" />
+            Game Rules
+          </button>
+          <div class="footer-text gamerules-desc">View how to play and win big!</div>
+        </div>
       </div>
+    </div>
+  </div>
+  <!-- Modal popup for Game Rules image (OUTSIDE .container) -->
+  <div id="gameRulesModal">
+    <div class="modal-inner">
+      <button id="closeRulesBtn" title="Close">&times;</button>
+      <img src="https://i.imgur.com/8TjkQzg.png" alt="Game Rules" />
     </div>
   </div>
   <script>
@@ -347,6 +419,17 @@
         document.getElementById('mainContent').classList.add('show');
       }, 500); // match CSS transition
     });
+    // Game Rules popup logic
+    document.getElementById('showRulesBtn').onclick = function() {
+      document.getElementById('gameRulesModal').style.display = 'flex';
+    };
+    document.getElementById('closeRulesBtn').onclick = function() {
+      document.getElementById('gameRulesModal').style.display = 'none';
+    };
+    // Optional: close modal if clicking outside the image
+    document.getElementById('gameRulesModal').onclick = function(e) {
+      if (e.target === this) this.style.display = 'none';
+    };
   </script>
 </body>
 </html>
